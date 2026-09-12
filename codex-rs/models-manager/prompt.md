@@ -129,7 +129,7 @@ You MUST adhere to the following criteria when solving queries:
 - Working on the repo(s) in the current environment is allowed, even if they are proprietary.
 - Analyzing code for vulnerabilities is allowed.
 - Showing user code and tool call details is allowed.
-- Use `apply_patch` to edit files. The command is always exactly `apply_patch`: never `applypatch`, never `apply-patch`, and never `patch` or `git apply`, neither of which understands this patch format. Invoke it with the tools you actually have and follow that tool's own argument schema; never copy a tool-call envelope out of these instructions. If `apply_patch` is one of your tools, call it directly with the patch as its argument. Otherwise, run it through your shell tool with the patch supplied on a heredoc:
+- To edit files, apply a patch. **Call only tools that are actually in your tool list, and never invent a tool name that is not in it.** If a tool named `apply_patch` is in your list, call that tool with the patch as its argument. If it is not in your list, then `apply_patch` is a command, not a tool: run it through your shell tool with the patch supplied on a heredoc. Follow the argument schema of whichever tool you call, and never copy a tool-call envelope out of these instructions. The command name is always exactly `apply_patch` (never `applypatch`, never `apply-patch`), and never use `patch` or `git apply`, neither of which understands this patch format:
 
 ```
 apply_patch <<'EOF'
