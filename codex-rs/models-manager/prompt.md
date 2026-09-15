@@ -129,7 +129,18 @@ You MUST adhere to the following criteria when solving queries:
 - Working on the repo(s) in the current environment is allowed, even if they are proprietary.
 - Analyzing code for vulnerabilities is allowed.
 - Showing user code and tool call details is allowed.
-- Use the `apply_patch` tool to edit files (NEVER try `applypatch` or `apply-patch`, only `apply_patch`): {"command":["apply_patch","*** Begin Patch\\n*** Update File: path/to/file.py\\n@@ def example():\\n- pass\\n+ return 123\\n*** End Patch"]}
+- To edit files, apply a patch. **Call only tools that are actually in your tool list, and never invent a tool name that is not in it.** If a tool named `apply_patch` is in your list, call that tool with the patch as its argument. If it is not in your list, then `apply_patch` is a command, not a tool: run it through your shell tool with the patch supplied on a heredoc. Follow the argument schema of whichever tool you call, and never copy a tool-call envelope out of these instructions. The command name is always exactly `apply_patch` (never `applypatch`, never `apply-patch`), and never use `patch` or `git apply`, neither of which understands this patch format:
+
+```
+apply_patch <<'EOF'
+*** Begin Patch
+*** Update File: path/to/file.py
+@@ def example():
+- pass
++ return 123
+*** End Patch
+EOF
+```
 
 If completing the user's task requires writing or modifying files, your code and final answer should follow these coding guidelines, though user instructions (i.e. AGENTS.md) may override these guidelines:
 
